@@ -1,0 +1,19 @@
+/* Fix invisible dark badge when combined with dark outline button */
+button.btn:hover span.btn,
+button.btn:active span.btn
+{
+    color: #fff;
+    border-color: #fff;
+}
+
+.ellipsis {
+    max-width: 150px; /* Set your desired max-width */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Fix dropify text message size is too big */
+.dropify-wrapper .dropify-message p {
+    font-size: 1rem;
+}
