@@ -216,20 +216,6 @@ else :
 
     <script>
       $(document).ready(function() {
-
-        const selectKelas = $('#xid_kelas');
-        initSelect2(selectKelas, {
-          width: '100%',
-          dropdownParent: "#ModalInputPerusahaan .modal-content .modal-body"
-        });
-
-        $('.toggle_modal_detail_perusahaan').tooltip({
-          title: 'Alamat, Hak Akses Akun, dan Tempat, Tanggal Lahir',
-          delay: {
-            show: 1000,
-            hide: 100
-          }
-        });
       
 
         $('.toggle_modal_tambah').on('click', function() {
@@ -279,19 +265,6 @@ else :
               console.log("ajax call went wrong:" + error);
             }
           })
-        });
-
-        
-        $('.toggle_modal_detail_perusahaan').on('click', function() {
-          const data = $(this).data();
-        
-          $('#ModalDetailPerusahaan .xnama_perusahaan').html(data.nama_perusahaan);
-          $('#ModalDetailPerusahaan .xusername').html(data.username || 'Tidak ada (akun belum dibuat)');
-          $('#ModalDetailPerusahaan .xhak_akses').html(data.hak_akses || 'Tidak ada (akun belum dibuat)');
-          $('#ModalDetailPerusahaan .xalamat').html(data.alamat);
-          $('#ModalDetailPerusahaan .xtmp_tgl_lahir').html(`${data.tmp_lahir}, ${moment(data.tgl_lahir).format("DD MMMM YYYY")}`);
-        
-          $('#ModalDetailPerusahaan').modal('show');
         });
         
 
