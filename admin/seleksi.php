@@ -347,6 +347,14 @@ else :
           });
         }
 
+        const select2ModalInputSeleksi = $('#ModalInputSeleksi .select2');
+
+        initSelect2(select2ModalInputSeleksi, {
+          width: '100%',
+          dropdownParent: "#ModalInputSeleksi .modal-content .modal-body"
+        });
+        
+
         $('.toggle_modal_tambah').on('click', function() {
           $('#ModalInputSeleksi .modal-title').html(`<i data-feather="plus-circle" class="me-2 mt-1"></i>Tambah Seleksi`);
           $('#ModalInputSeleksi form').attr({action: 'seleksi_tambah.php', method: 'post'});

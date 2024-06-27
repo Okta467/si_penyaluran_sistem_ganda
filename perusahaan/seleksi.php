@@ -340,6 +340,13 @@ else :
             ]
           });
         }
+        
+        const select2ModalInputSeleksi = $('#ModalInputSeleksi .select2');
+        
+        initSelect2(select2ModalInputSeleksi, {
+          width: '100%',
+          dropdownParent: "#ModalInputSeleksi .modal-content .modal-body"
+        });
 
 
         $('.toggle_modal_ubah').on('click', function() {
