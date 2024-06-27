@@ -84,6 +84,10 @@
 			header("location:siswa/index.php?go=dashboard");
 			break;
 			
+		case 'guru':
+			header("location:logout.php");
+			break;
+			
 		case 'kepala_sekolah':
 			header("location:kepala_sekolah/index.php?go=dashboard");
 			break;
@@ -94,7 +98,7 @@
 		
 		default:
 			$_SESSION['msg'] = 'hak akses not found!';
-			header("location:index.php");
+			header("location:logout.php");
 			break;
 	}
 ?>
