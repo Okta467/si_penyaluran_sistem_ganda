@@ -10,12 +10,12 @@
 
     include_once '../config/connection.php';
     
-    $id_tahun_penilaian = $_GET['xid_tahun_penilaian'];
+    $id_tahun_seleksi = $_GET['xid_tahun_seleksi'];
 
     $stmt = mysqli_stmt_init($connection);
 
-    mysqli_stmt_prepare($stmt, "DELETE FROM tbl_tahun_penilaian WHERE id=?");
-    mysqli_stmt_bind_param($stmt, 'i', $id_tahun_penilaian);
+    mysqli_stmt_prepare($stmt, "DELETE FROM tbl_tahun_seleksi WHERE id=?");
+    mysqli_stmt_bind_param($stmt, 'i', $id_tahun_seleksi);
 
     $delete = mysqli_stmt_execute($stmt);
 
@@ -26,5 +26,5 @@
     mysqli_stmt_close($stmt);
     mysqli_close($connection);
 
-    echo "<meta http-equiv='refresh' content='0;tahun_penilaian.php?go=tahun_penilaian'>";
+    echo "<meta http-equiv='refresh' content='0;tahun_seleksi.php?go=tahun_seleksi'>";
 ?>

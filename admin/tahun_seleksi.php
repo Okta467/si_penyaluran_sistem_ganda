@@ -16,9 +16,9 @@ else :
   <head>
     <?php include '_partials/head.php' ?>
 
-    <meta name="description" content="Data Tahun Penilaian" />
+    <meta name="description" content="Data Tahun Seleksi" />
     <meta name="author" content="" />
-    <title>Tahun Penilaian - <?= SITE_NAME ?></title>
+    <title>Tahun Seleksi - <?= SITE_NAME ?></title>
   </head>
 
   <body class="nav-fixed">
@@ -39,7 +39,7 @@ else :
             <!-- Custom page header alternative example-->
             <div class="d-flex justify-content-between align-items-sm-center flex-column flex-sm-row mb-4">
               <div class="me-4 mb-3 mb-sm-0">
-                <h1 class="mb-0">Tahun Penilaian</h1>
+                <h1 class="mb-0">Tahun Seleksi</h1>
                 <div class="small">
                   <span class="fw-500 text-primary"><?= date('D') ?></span>
                   &middot; <?= date('M d, Y') ?> &middot; <?= date('H:i') ?> WIB
@@ -59,7 +59,7 @@ else :
               <div class="card-header">
                 <div>
                   <i data-feather="calendar" class="me-2 mt-1"></i>
-                  Data Tahun Penilaian
+                  Data Tahun Seleksi
                 </div>
                 <button class="btn btn-sm btn-primary toggle_modal_tambah" type="button"><i data-feather="plus-circle" class="me-2"></i>Tambah Data</button>
               </div>
@@ -68,30 +68,30 @@ else :
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>Tahun Penilaian</th>
+                      <th>Tahun Seleksi</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php
                     $no = 1;
-                    $query_tahun_penilaian = mysqli_query($connection, "SELECT *  FROM tbl_tahun_penilaian ORDER BY id DESC");
+                    $query_tahun_seleksi = mysqli_query($connection, "SELECT *  FROM tbl_tahun_seleksi ORDER BY id DESC");
 
-                    while ($tahun_penilaian = mysqli_fetch_assoc($query_tahun_penilaian)):
+                    while ($tahun_seleksi = mysqli_fetch_assoc($query_tahun_seleksi)):
                     ?>
 
                       <tr>
                         <td><?= $no++ ?></td>
-                        <td><?= $tahun_penilaian['tahun'] ?></td>
+                        <td><?= $tahun_seleksi['tahun'] ?></td>
                         <td>
                           <button class="btn btn-datatable btn-icon btn-transparent-dark me-2 toggle_modal_ubah"
-                            data-id_tahun_penilaian="<?= $tahun_penilaian['id'] ?>" 
-                            data-tahun="<?= $tahun_penilaian['tahun'] ?>">
+                            data-id_tahun_seleksi="<?= $tahun_seleksi['id'] ?>" 
+                            data-tahun="<?= $tahun_seleksi['tahun'] ?>">
                             <i class="fa fa-pen-to-square"></i>
                           </button>
                           <button class="btn btn-datatable btn-icon btn-transparent-dark me-2 toggle_swal_hapus"
-                            data-id_tahun_penilaian="<?= $tahun_penilaian['id'] ?>" 
-                            data-tahun="<?= $tahun_penilaian['tahun'] ?>">
+                            data-id_tahun_seleksi="<?= $tahun_seleksi['id'] ?>" 
+                            data-tahun="<?= $tahun_seleksi['tahun'] ?>">
                             <i class="fa fa-trash-can"></i>
                           </button>
                         </td>
@@ -114,20 +114,20 @@ else :
     </div>
     
     <!--============================= MODAL INPUT JURUSAN =============================-->
-    <div class="modal fade" id="ModalInputTahunPenilaian" tabindex="-1" role="dialog" aria-labelledby="ModalInputTahunPenilaianTitle" aria-hidden="true">
+    <div class="modal fade" id="ModalInputTahunSeleksi" tabindex="-1" role="dialog" aria-labelledby="ModalInputTahunSeleksiTitle" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="ModalInputTahunPenilaianTitle">Modal title</h5>
+            <h5 class="modal-title" id="ModalInputTahunSeleksiTitle">Modal title</h5>
             <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <form>
             <div class="modal-body">
               
-              <input type="hidden" id="xid_tahun_penilaian" name="xid_tahun_penilaian">
+              <input type="hidden" id="xid_tahun_seleksi" name="xid_tahun_seleksi">
             
               <div class="mb-3">
-                <label class="small mb-1" for="xtahun">Tahun Penilaian</label>
+                <label class="small mb-1" for="xtahun">Tahun Seleksi</label>
                 <input type="number" name="xtahun" min="1900" max="9999" class="form-control" id="xtahun" placeholder="Enter tahun penilaian" required />
               </div>
 
@@ -149,40 +149,40 @@ else :
     <script>
       $(document).ready(function() {
         $('.toggle_modal_tambah').on('click', function() {
-          $('#ModalInputTahunPenilaian .modal-title').html(`<i data-feather="plus-circle" class="me-2 mt-1"></i>Tambah Tahun Penilaian`);
-          $('#ModalInputTahunPenilaian form').attr({action: 'tahun_penilaian_tambah.php', method: 'post'});
+          $('#ModalInputTahunSeleksi .modal-title').html(`<i data-feather="plus-circle" class="me-2 mt-1"></i>Tambah Tahun Seleksi`);
+          $('#ModalInputTahunSeleksi form').attr({action: 'tahun_seleksi_tambah.php', method: 'post'});
 
           // Re-init all feather icons
           feather.replace();
           
-          $('#ModalInputTahunPenilaian').modal('show');
+          $('#ModalInputTahunSeleksi').modal('show');
         });
 
 
         $('.toggle_modal_ubah').on('click', function() {
-          const id_tahun_penilaian   = $(this).data('id_tahun_penilaian');
+          const id_tahun_seleksi   = $(this).data('id_tahun_seleksi');
           const tahun = $(this).data('tahun');
           
-          $('#ModalInputTahunPenilaian .modal-title').html(`<i data-feather="edit" class="me-2 mt-1"></i>Ubah Tahun Penilaian`);
-          $('#ModalInputTahunPenilaian form').attr({action: 'tahun_penilaian_ubah.php', method: 'post'});
+          $('#ModalInputTahunSeleksi .modal-title').html(`<i data-feather="edit" class="me-2 mt-1"></i>Ubah Tahun Seleksi`);
+          $('#ModalInputTahunSeleksi form').attr({action: 'tahun_seleksi_ubah.php', method: 'post'});
 
-          $('#ModalInputTahunPenilaian #xid_tahun_penilaian').val(id_tahun_penilaian);
-          $('#ModalInputTahunPenilaian #xtahun').val(tahun);
+          $('#ModalInputTahunSeleksi #xid_tahun_seleksi').val(id_tahun_seleksi);
+          $('#ModalInputTahunSeleksi #xtahun').val(tahun);
 
           // Re-init all feather icons
           feather.replace();
           
-          $('#ModalInputTahunPenilaian').modal('show');
+          $('#ModalInputTahunSeleksi').modal('show');
         });
         
 
         $('#datatablesSimple').on('click', '.toggle_swal_hapus', function() {
-          const id_tahun_penilaian   = $(this).data('id_tahun_penilaian');
+          const id_tahun_seleksi   = $(this).data('id_tahun_seleksi');
           const tahun = $(this).data('tahun');
           
           Swal.fire({
             title: "Konfirmasi Tindakan?",
-            html: `Hapus data tahun_penilaian: <strong>${tahun}?</strong>`,
+            html: `Hapus data tahun_seleksi: <strong>${tahun}?</strong>`,
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -196,7 +196,7 @@ else :
                 icon: "success",
                 timer: 3000
               }).then(() => {
-                window.location = `tahun_penilaian_hapus.php?xid_tahun_penilaian=${id_tahun_penilaian}`;
+                window.location = `tahun_seleksi_hapus.php?xid_tahun_seleksi=${id_tahun_seleksi}`;
               });
             }
           });

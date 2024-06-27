@@ -15,21 +15,22 @@
     $config   = HTMLPurifier_Config::createDefault();
     $purifier = new HTMLPurifier($config);
     
+    $id_tahun_seleksi   = $_POST['xid_tahun_seleksi'];
     $tahun = htmlspecialchars($purifier->purify($_POST['xtahun']));
 
     $stmt = mysqli_stmt_init($connection);
 
-    mysqli_stmt_prepare($stmt, "INSERT INTO tbl_tahun_penilaian (tahun) VALUES (?)");
-    mysqli_stmt_bind_param($stmt, 's', $tahun);
+    mysqli_stmt_prepare($stmt, "UPDATE tbl_tahun_seleksi SET tahun=? WHERE id=?");
+    mysqli_stmt_bind_param($stmt, 'si', $tahun, $id_tahun_seleksi);
 
-    $insert = mysqli_stmt_execute($stmt);
+    $update = mysqli_stmt_execute($stmt);
 
-    !$insert
+    !$update
         ? $_SESSION['msg'] = 'other_error'
-        : $_SESSION['msg'] = 'save_success';
+        : $_SESSION['msg'] = 'update_success';
 
     mysqli_stmt_close($stmt);
     mysqli_close($connection);
 
-    echo "<meta http-equiv='refresh' content='0;tahun_penilaian.php?go=tahun_penilaian'>";
+    echo "<meta http-equiv='refresh' content='0;tahun_seleksi.php?go=tahun_seleksi'>";
 ?>
