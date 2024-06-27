@@ -72,8 +72,6 @@ else :
                       <th>Posisi Penempatan</th>
                       <th>Perusahaan</th>
                       <th>Jenis</th>
-                      <th>File Prestasi</th>
-                      <th>File Keahlian</th>
                       <th>Keterangan</th>
                       <th>Aksi</th>
                     </tr>
@@ -128,38 +126,6 @@ else :
                         <td><?= $pengumuman['nama_posisi'] ?></td>
                         <td><?= $pengumuman['nama_perusahaan'] ?></td>
                         <td><?= $pengumuman['nama_jenis'] ?></td>
-                        <td>
-                          <?php if (!$link_file_prestasi): ?>
-
-                            <small class="text-muted">Tidak ada</small>
-
-                          <?php else: ?>
-
-                            <a class="btn btn-xs rounded-pill bg-purple-soft text-purple" href="<?= $link_file_prestasi ?>" target="_blank">
-                              <i data-feather="eye" class="me-1"></i>Preview
-                            </a>
-                            <a class="btn btn-xs rounded-pill bg-blue-soft text-blue" href="<?= $link_file_prestasi ?>" download>
-                              <i data-feather="download-cloud" class="me-1"></i>Download
-                            </a>
-                          
-                          <?php endif ?>
-                        </td>
-                        <td>
-                          <?php if (!$link_file_keahlian): ?>
-
-                            <small class="text-muted">Tidak ada</small>
-
-                          <?php else: ?>
-                          
-                            <a class="btn btn-xs rounded-pill bg-purple-soft text-purple" href="<?= $link_file_keahlian ?>" target="_blank">
-                              <i data-feather="eye" class="me-1"></i>Preview
-                            </a>
-                            <a class="btn btn-xs rounded-pill bg-blue-soft text-blue" href="<?= $link_file_keahlian ?>" download>
-                              <i data-feather="download-cloud" class="me-1"></i>Download
-                            </a>
-                          
-                          <?php endif ?>
-                        </td>
                         <td>
                           <?php if (!$pengumuman['keterangan_seleksi']): ?>
 
