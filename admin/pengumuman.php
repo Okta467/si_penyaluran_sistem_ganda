@@ -109,7 +109,7 @@ else :
                         ON h.id = g.id_jenis_perusahaan
                       LEFT JOIN tbl_pengumuman_seleksi AS i
                         ON a.id = i.id_seleksi
-                      ORDER BY a.id DESC") or die(mysqli_error($connection));
+                      ORDER BY a.id DESC");
 
                     while ($pengumuman = mysqli_fetch_assoc($query_pengumuman)):
                       $link_file_prestasi = !$pengumuman['file_prestasi'] 
