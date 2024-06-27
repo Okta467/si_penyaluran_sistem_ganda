@@ -97,7 +97,11 @@ else :
                         <td><?= $no++ ?></td>
                         <td><?= htmlspecialchars($perusahaan['nama_perusahaan']) ?></td>
                         <td><?= $perusahaan['nama_jenis'] ?></td>
-                        <td><?= htmlspecialchars($perusahaan['alamat_perusahaan']) ?></td>
+                        <td>
+                          <div class="ellipsis toggle_tooltip" title="<?= htmlspecialchars($perusahaan['alamat_perusahaan']) ?>">
+                            <?= htmlspecialchars($perusahaan['alamat_perusahaan']) ?>
+                          </div>
+                        </td>
                         <td>
                           <button class="btn btn-datatable btn-icon btn-transparent-dark me-2 toggle_modal_ubah"
                             data-id_perusahaan="<?= $perusahaan['id_perusahaan'] ?>">
