@@ -48,9 +48,9 @@ $user_logged_in = $_SESSION['nama_pegawai'] ?? $_SESSION['nama_guest'] ?? $_SESS
         Pengumuman
       </a>
       
-      <a class="nav-link <?php if ($current_page === 'tahun_penilaian') echo 'active' ?>" href="tahun_penilaian.php?go=tahun_penilaian">
+      <a class="nav-link <?php if ($current_page === 'tahun_seleksi') echo 'active' ?>" href="tahun_seleksi.php?go=tahun_seleksi">
         <div class="nav-link-icon"><i data-feather="calendar"></i></div>
-        Tahun Penilaian
+        Tahun Seleksi
       </a>
       
       <a class="nav-link <?php if ($current_page === 'jenis_perusahaan') echo 'active' ?>" href="jenis_perusahaan.php?go=jenis_perusahaan">
