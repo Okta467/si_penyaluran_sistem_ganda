@@ -58,6 +58,11 @@ $user_logged_in = $_SESSION['nama_pegawai'] ?? $_SESSION['nama_guest'] ?? $_SESS
         Jenis Perusahaan
       </a>
       
+      <a class="nav-link <?php if ($current_page === 'posisi_penempatan') echo 'active' ?>" href="posisi_penempatan.php?go=posisi_penempatan">
+        <div class="nav-link-icon"><i data-feather="tool"></i></div>
+        Posisi Penempatan
+      </a>
+      
       <div class="sidenav-menu-heading">Data Siswa</div>
       
       <a class="nav-link <?php if ($current_page === 'keahlian_siswa') echo 'active' ?>" href="keahlian_siswa.php?go=keahlian_siswa">
