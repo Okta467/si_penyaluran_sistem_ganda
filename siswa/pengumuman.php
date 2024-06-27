@@ -131,18 +131,34 @@ else :
                         <td><?= $pengumuman['nama_perusahaan'] ?></td>
                         <td><?= $pengumuman['nama_jenis'] ?></td>
                         <td>
-                          <button type="button" class="btn btn-xs rounded-pill btn-outline-primary toggle_daftar_prestasi_siswa" data-id_siswa="<?= $pengumuman['id_siswa'] ?>">
-                            <i data-feather="list" class="me-1"></i>
-                            Daftar
-                            <span class="btn btn-sm rounded-pill btn-outline-primary py-0 px-2 ms-1"><?= $pengumuman['jml_file_prestasi'] ?></button>
-                          </button>
+                          <?php if (!$pengumuman['jml_file_prestasi']): ?>
+
+                            <small class="text-muted">Tidak ada</small>
+
+                          <?php else: ?>
+                          
+                            <button type="button" class="btn btn-xs rounded-pill btn-outline-primary toggle_daftar_prestasi_siswa" data-id_siswa="<?= $pengumuman['id_siswa'] ?>">
+                              <i data-feather="list" class="me-1"></i>
+                              Daftar
+                              <span class="btn btn-sm rounded-pill btn-outline-primary py-0 px-2 ms-1"><?= $pengumuman['jml_file_prestasi'] ?></button>
+                            </button>
+                          
+                          <?php endif ?>
                         </td>
                         <td>
-                          <button type="button" class="btn btn-xs rounded-pill btn-outline-primary toggle_daftar_keahlian_siswa" data-id_siswa="<?= $pengumuman['id_siswa'] ?>">
-                            <i data-feather="list" class="me-1"></i>
-                            Daftar
-                            <span class="btn btn-sm rounded-pill btn-outline-primary py-0 px-2 ms-1"><?= $pengumuman['jml_file_keahlian'] ?></button>
-                          </button>
+                          <?php if (!$pengumuman['jml_file_keahlian']): ?>
+
+                            <small class="text-muted">Tidak ada</small>
+
+                          <?php else: ?>
+                          
+                            <button type="button" class="btn btn-xs rounded-pill btn-outline-primary toggle_daftar_keahlian_siswa" data-id_siswa="<?= $pengumuman['id_siswa'] ?>">
+                              <i data-feather="list" class="me-1"></i>
+                              Daftar
+                              <span class="btn btn-sm rounded-pill btn-outline-primary py-0 px-2 ms-1"><?= $pengumuman['jml_file_keahlian'] ?></button>
+                            </button>
+                          
+                          <?php endif ?>
                         </td>
                         <td>
                           <?php if (!$pengumuman['keterangan_seleksi']): ?>
