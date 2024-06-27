@@ -16,8 +16,11 @@
     $query = 
         "SELECT
             a.id AS id_perusahaan, a.nama_perusahaan, a.alamat_perusahaan,
+            b.id AS id_jenis_perusahaan, b.nama_jenis,
             f.id AS id_pengguna, f.username, f.hak_akses
         FROM tbl_perusahaan AS a
+        LEFT JOIN tbl_jenis_perusahaan AS b
+            ON b.id = a.id_jenis_perusahaan
         LEFT JOIN tbl_pengguna AS f
             ON f.id = a.id_pengguna
         WHERE a.id=?";
