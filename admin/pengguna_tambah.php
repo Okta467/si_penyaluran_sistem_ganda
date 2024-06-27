@@ -20,7 +20,7 @@
     $id_perusahaan        = $_POST['xid_perusahaan'] ?? NULL;
     $username             = htmlspecialchars($purifier->purify($_POST['xusername']));
     $password             = password_hash($_POST['xpassword'], PASSWORD_DEFAULT);
-    $is_allowed_hak_akses = in_array($_POST['xhak_akses'], ['perusahaan', 'kepala_sekolah', 'siswa', 'admin']); 
+    $is_allowed_hak_akses = in_array($_POST['xhak_akses'], ['perusahaan', 'guru', 'kepala_sekolah', 'siswa', 'admin']); 
     $hak_akses            = $is_allowed_hak_akses ? $_POST['xhak_akses'] : NULL;
 
     if (!$is_allowed_hak_akses) {
@@ -68,7 +68,7 @@
             $_SESSION['msg'] = 'Statement Siswa preparation failed: ' . mysqli_stmt_error($stmt_siswa);
         endif;
 
-    elseif ($hak_akses === 'kepala_sekolah'):
+    elseif (in_array($hak_akses, ['guru', 'kepala_sekolah'])):
 
         $stmt_pengguna = mysqli_stmt_init($connection);
 

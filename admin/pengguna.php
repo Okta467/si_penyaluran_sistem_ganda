@@ -121,7 +121,7 @@ else :
                           <img src="<?= base_url('assets/img/illustrations/profiles/profile-' . rand(1, 6) . '.png') ?>" alt="Image User" class="avatar me-2">
                           <?= $pengguna['hak_akses'] === 'admin' ? 'Admin' : '' ?>
                           <?= $pengguna['hak_akses'] === 'siswa' ? $pengguna['nama_siswa'] : '' ?>
-                          <?= $pengguna['hak_akses'] === 'kepala_sekolah' ? $pengguna['nama_guru'] : '' ?>
+                          <?= in_array($pengguna['hak_akses'], ['guru', 'kepala_sekolah']) ? $pengguna['nama_guru'] : '' ?>
                           <?= $pengguna['hak_akses'] === 'perusahaan' ? $pengguna['nama_perusahaan'] : '' ?>
                         </td>
                         <td><?= $pengguna['username'] ?></td>
@@ -223,6 +223,7 @@ else :
                   <option value="">-- Pilih --</option>
                   <option value="admin">admin</option>
                   <option value="siswa">Siswa</option>
+                  <option value="guru">Guru</option>
                   <option value="kepala_sekolah">Kepala Sekolah</option>
                   <option value="perusahaan">Perusahaan</option>
                 </select>
@@ -388,8 +389,8 @@ else :
               return;
             }
           
-          
-            if (hak_akses.toLowerCase() === 'kepala_sekolah') {
+            
+            if (['guru', 'kepala_sekolah'].includes(hak_akses.toLowerCase())) {
               let url_ajax = tipe_pengguna === 'with_no_user'
                 ? 'get_guru_with_no_user.php'
                 : 'get_guru.php';
@@ -553,6 +554,7 @@ else :
             {id: '', text: '-- Pilih --'},
             {id: 'admin', text: 'Admin'},
             {id: 'siswa', text: 'Siswa'},
+            {id: 'guru', text: 'Guru'},
             {id: 'kepala_sekolah', text: 'Kepala Sekolah'},
             {id: 'perusahaan', text: 'Perusahaan'},
           ];
@@ -595,6 +597,11 @@ else :
           else if (data.hak_akses === 'siswa') {
             data_hak_akses = [
               {id: 'siswa', text: 'Siswa'},
+            ];
+          }
+          else if (data.hak_akses === 'guru') {
+            data_hak_akses = [
+              {id: 'guru', text: 'Guru'},
             ];
           }
           else if (data.hak_akses === 'kepala_sekolah') {
@@ -667,7 +674,7 @@ else :
           
           if (data.hak_akses === 'admin') nama_pengguna = data.username;
           else if (data.hak_akses === 'siswa') nama_pengguna = `${data.nama_siswa} (${data.username})`;
-          else if (data.hak_akses === 'kepala_sekolah') nama_pengguna = `${data.nama_guru} (${data.username})`;
+          else if (['kepala_sekolah', 'guru'].includes(data.hak_akses)) nama_pengguna = `${data.nama_guru} (${data.username})`;
           else if (data.hak_akses === 'perusahaan') nama_pengguna = `${data.nama_perusahaan} (${data.username})`;
           
           Swal.fire({

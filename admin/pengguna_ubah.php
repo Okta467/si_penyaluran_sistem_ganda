@@ -18,7 +18,7 @@
     $id_pengguna          = $_POST['xid_pengguna'];
     $username             = htmlspecialchars($purifier->purify($_POST['xusername']));
     $password             = password_hash($_POST['xpassword'], PASSWORD_DEFAULT);
-    $is_allowed_hak_akses = in_array($_POST['xhak_akses'], ['perusahaan', 'kepala_sekolah', 'siswa', 'admin']); 
+    $is_allowed_hak_akses = in_array($_POST['xhak_akses'], ['perusahaan', 'guru', 'kepala_sekolah', 'siswa', 'admin']); 
     $hak_akses_yg_diinput = $is_allowed_hak_akses ? $_POST['xhak_akses'] : NULL;
 
     if (!$is_allowed_hak_akses) {
