@@ -259,7 +259,7 @@ else :
             </div>
             <div class="modal-footer">
               <button class="btn btn-light border" type="button" data-bs-dismiss="modal">Batal</button>
-              <button class="btn btn-primary" id="toggle_swa_submit" type="submit">Simpan</button>
+              <button class="btn btn-primary" id="toggle_swal_submit" type="submit">Simpan</button>
             </div>
           </form>
         </div>
