@@ -63,18 +63,6 @@ $user_logged_in = $_SESSION['nama_pegawai'] ?? $_SESSION['nama_guest'] ?? $_SESS
         Posisi Penempatan
       </a>
       
-      <div class="sidenav-menu-heading">Data Siswa</div>
-      
-      <a class="nav-link <?php if ($current_page === 'keahlian_siswa') echo 'active' ?>" href="keahlian_siswa.php?go=keahlian_siswa">
-        <div class="nav-link-icon"><i data-feather="star"></i></div>
-        Keahlian
-      </a>
-      
-      <a class="nav-link <?php if ($current_page === 'prestasi_siswa') echo 'active' ?>" href="prestasi_siswa.php?go=prestasi_siswa">
-        <div class="nav-link-icon"><i data-feather="star"></i></div>
-        Prestasi
-      </a>
-      
       <div class="sidenav-menu-heading">Detail Guru</div>
 
       <a class="nav-link <?php if ($current_page === 'jabatan') echo 'active' ?>" href="jabatan.php?go=jabatan">
