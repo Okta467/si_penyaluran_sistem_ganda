@@ -101,7 +101,7 @@ else :
                       LEFT JOIN tbl_keahlian_siswa AS e
                         ON c.id = e.id_siswa
                       INNER JOIN tbl_posisi_penempatan AS f
-                        ON f.id = id_posisi_penempatan
+                        ON f.id = a.id_posisi_penempatan
                       INNER JOIN tbl_perusahaan AS g
                         ON g.id = f.id_perusahaan
                       LEFT JOIN tbl_jenis_perusahaan AS h
