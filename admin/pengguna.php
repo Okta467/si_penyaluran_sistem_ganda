@@ -54,6 +54,17 @@ else :
 
             </div>
             
+            <!-- Page Information Description -->
+            <div class="card card-header-actions mb-4 mt-5">
+              <div class="bg-gray-100 rounded p-3 border border-primary">
+                <h6 class="text-blue">
+                  <i data-feather="info" class="me-1"></i>
+                  Informasi
+                </h6>
+                <p class="small mb-0">Pengguna dengan hak akses <span class="text-danger">guru</span> hanya untuk <span class="text-danger">membedakan</span> guru dan kepala sekolah. Guru saat ini <span class="text-danger">tidak memiliki</span> halamannya sendiri.</p>
+              </div>
+            </div>
+            
             <!-- Main page content-->
             <div class="card card-header-actions mb-4 mt-5">
               <div class="card-header">
