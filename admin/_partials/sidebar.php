@@ -38,9 +38,9 @@ $user_logged_in = $_SESSION['nama_pegawai'] ?? $_SESSION['nama_guest'] ?? $_SESS
       
       <div class="sidenav-menu-heading">Perusahaan</div>
       
-      <a class="nav-link <?php if ($current_page === 'penilaian') echo 'active' ?>" href="penilaian.php?go=penilaian">
+      <a class="nav-link <?php if ($current_page === 'seleksi') echo 'active' ?>" href="seleksi.php?go=seleksi">
         <div class="nav-link-icon"><i data-feather="edit-2"></i></div>
-        Penilaian
+        Seleksi
       </a>
       
       <a class="nav-link <?php if ($current_page === 'pengumuman') echo 'active' ?>" href="pengumuman.php?go=pengumuman">

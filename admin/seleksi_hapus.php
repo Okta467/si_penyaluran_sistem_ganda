@@ -10,12 +10,12 @@
 
     include_once '../config/connection.php';
     
-    $id_penilaian = $_GET['xid_penilaian'];
+    $id_seleksi = $_GET['xid_seleksi'];
 
     $stmt = mysqli_stmt_init($connection);
 
-    mysqli_stmt_prepare($stmt, "DELETE FROM tbl_penilaian_seleksi WHERE id=?");
-    mysqli_stmt_bind_param($stmt, 'i', $id_penilaian);
+    mysqli_stmt_prepare($stmt, "DELETE FROM tbl_seleksi WHERE id=?");
+    mysqli_stmt_bind_param($stmt, 'i', $id_seleksi);
 
     $delete = mysqli_stmt_execute($stmt);
 
@@ -26,5 +26,5 @@
     mysqli_stmt_close($stmt);
     mysqli_close($connection);
 
-    echo "<meta http-equiv='refresh' content='0;penilaian.php?go=penilaian'>";
+    echo "<meta http-equiv='refresh' content='0;seleksi.php?go=seleksi'>";
 ?>

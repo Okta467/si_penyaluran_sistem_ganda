@@ -10,15 +10,13 @@
 
     include_once '../config/connection.php';
     
-    $id_penilaian       = $_POST['xid_penilaian'];
-    $id_tahun_penilaian = $_POST['xid_tahun_penilaian'];
-    $nilai_prestasi     = $_POST['xnilai_prestasi'];
-    $nilai_keahlian     = $_POST['xnilai_keahlian'];
+    $id_seleksi = $_POST['xid_seleksi'];
+    $id_posisi_penempatan = $_POST['xid_posisi_penempatan'];
 
     $stmt = mysqli_stmt_init($connection);
 
-    mysqli_stmt_prepare($stmt, "UPDATE tbl_penilaian_seleksi SET id_tahun_penilaian=?, nilai_prestasi=?, nilai_keahlian=? WHERE id=?");
-    mysqli_stmt_bind_param($stmt, 'iddi', $id_tahun_penilaian, $nilai_prestasi, $nilai_keahlian, $id_penilaian);
+    mysqli_stmt_prepare($stmt, "UPDATE tbl_seleksi SET id_posisi_penempatan=? WHERE id=?");
+    mysqli_stmt_bind_param($stmt, 'ii', $id_posisi_penempatan, $id_seleksi);
 
     $update = mysqli_stmt_execute($stmt);
 
@@ -29,5 +27,5 @@
     mysqli_stmt_close($stmt);
     mysqli_close($connection);
 
-    echo "<meta http-equiv='refresh' content='0;penilaian.php?go=penilaian'>";
+    echo "<meta http-equiv='refresh' content='0;seleksi.php?go=seleksi'>";
 ?>
