@@ -15,7 +15,7 @@
     $config   = HTMLPurifier_Config::createDefault();
     $purifier = new HTMLPurifier($config);
     
-    $id_penilaian = $_POST['xid_penilaian'];
+    $id_seleksi = $_POST['xid_seleksi'];
     $keterangan_seleksi = $_POST['xketerangan_seleksi'];
 
     if (!in_array($keterangan_seleksi, ['lolos', 'tidak_lolos'])) {
@@ -24,23 +24,23 @@
         return;
     }
 
-    $stmt_penilaian = mysqli_stmt_init($connection);
+    $stmt_seleksi = mysqli_stmt_init($connection);
 
-    mysqli_stmt_prepare($stmt_penilaian, "SELECT id FROM tbl_pengumuman_seleksi WHERE id_penilaian_seleksi=?");
-    mysqli_stmt_bind_param($stmt_penilaian, 'i', $id_penilaian);
-    mysqli_stmt_execute($stmt_penilaian);
+    mysqli_stmt_prepare($stmt_seleksi, "SELECT id FROM tbl_pengumuman_seleksi WHERE id_seleksi=?");
+    mysqli_stmt_bind_param($stmt_seleksi, 'i', $id_seleksi);
+    mysqli_stmt_execute($stmt_seleksi);
 
-    $result = mysqli_stmt_get_result($stmt_penilaian);
-    $penilaian = mysqli_fetch_assoc($result);
+    $result = mysqli_stmt_get_result($stmt_seleksi);
+    $seleksi = mysqli_fetch_assoc($result);
 
     $success = true;
 
-    // Insert if no data penilaian, else update
-    if (!$penilaian) {
+    // Insert if no data seleksi, else update
+    if (!$seleksi) {
         $stmt = mysqli_stmt_init($connection);
     
-        mysqli_stmt_prepare($stmt, "INSERT INTO tbl_pengumuman_seleksi (id_penilaian_seleksi, keterangan_seleksi) VALUES (?, ?)");
-        mysqli_stmt_bind_param($stmt, 'is', $id_penilaian, $keterangan_seleksi);
+        mysqli_stmt_prepare($stmt, "INSERT INTO tbl_pengumuman_seleksi (id_seleksi, keterangan_seleksi) VALUES (?, ?)");
+        mysqli_stmt_bind_param($stmt, 'is', $id_seleksi, $keterangan_seleksi);
         
         if (!mysqli_stmt_execute($stmt)) {
             $success = false;
@@ -49,8 +49,8 @@
     } else {
         $stmt = mysqli_stmt_init($connection);
     
-        mysqli_stmt_prepare($stmt, "UPDATE tbl_pengumuman_seleksi SET keterangan_seleksi=? WHERE id_penilaian_seleksi=?");
-        mysqli_stmt_bind_param($stmt, 'si', $keterangan_seleksi, $id_penilaian);
+        mysqli_stmt_prepare($stmt, "UPDATE tbl_pengumuman_seleksi SET keterangan_seleksi=? WHERE id_seleksi=?");
+        mysqli_stmt_bind_param($stmt, 'si', $keterangan_seleksi, $id_seleksi);
         
         if (!mysqli_stmt_execute($stmt)) {
             $success = false;

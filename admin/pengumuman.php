@@ -49,7 +49,7 @@ else :
               <!-- Date range picker example-->
               <div class="input-group input-group-joined border-0 shadow w-auto">
                 <span class="input-group-text"><i data-feather="calendar"></i></span>
-                <input class="form-control ps-0 pointer" id="litepickerRangePlugin" value="Tanggal: <?= date('d M Y') ?>" disabled />
+                <input class="form-control ps-0 pointer" id="litepickerRangePlugin" value="Tanggal: <?= date('d M Y') ?>" />
               </div>
 
             </div>
@@ -69,8 +69,9 @@ else :
                       <th>#</th>
                       <th>Tahun</th>
                       <th>Siswa</th>
-                      <th>Nilai Prestasi</th>
-                      <th>Nilai Keahlian</th>
+                      <th>Posisi Penempatan</th>
+                      <th>Perusahaan</th>
+                      <th>Jenis</th>
                       <th>File Prestasi</th>
                       <th>File Keahlian</th>
                       <th>Keterangan</th>
@@ -82,24 +83,33 @@ else :
                     $no = 1;
                     $query_pengumuman = mysqli_query($connection, 
                       "SELECT
-                        a.id AS id_penilaian, a.nilai_keahlian, a.nilai_prestasi,
-                        b.id AS id_tahun_penilaian, b.tahun,
+                        a.id AS id_seleksi,
+                        b.id AS id_tahun_seleksi, b.tahun,
                         c.id AS id_siswa, c.nisn, c.nama_siswa, c.jk, c.alamat, c.tmp_lahir, c.tgl_lahir, c.no_telp, c.email,
                         d.id AS id_prestasi_siswa, d.nama_prestasi, d.file_prestasi,
                         e.id AS id_keahlian_siswa, e.nama_keahlian, e.file_keahlian,
-                        f.id AS id_pengumuman, f.keterangan_seleksi
-                      FROM tbl_penilaian_seleksi AS a
-                      INNER JOIN tbl_tahun_penilaian AS b
-                        ON b.id = a.id_tahun_penilaian
+                        f.id AS id_posisi_penempatan, f.nama_posisi,
+                        g.id AS id_perusahaan, g.nama_perusahaan,
+                        h.id AS id_jenis_perusahaan, h.nama_jenis,
+                        i.id AS id_pengumuman, i.keterangan_seleksi
+                      FROM tbl_seleksi AS a
+                      INNER JOIN tbl_tahun_seleksi AS b
+                        ON b.id = a.id_tahun_seleksi
                       INNER JOIN tbl_siswa AS c
                         ON c.id = a.id_siswa
                       LEFT JOIN tbl_prestasi_siswa AS d
                         ON c.id = d.id_siswa
                       LEFT JOIN tbl_keahlian_siswa AS e
                         ON c.id = e.id_siswa
-                      LEFT JOIN tbl_pengumuman_seleksi AS f
-                        ON a.id = f.id_penilaian_seleksi
-                      ORDER BY a.id DESC");
+                      INNER JOIN tbl_posisi_penempatan AS f
+                        ON f.id = a.id_posisi_penempatan
+                      INNER JOIN tbl_perusahaan AS g
+                        ON g.id = f.id_perusahaan
+                      LEFT JOIN tbl_jenis_perusahaan AS h
+                        ON h.id = g.id_jenis_perusahaan
+                      LEFT JOIN tbl_pengumuman_seleksi AS i
+                        ON a.id = i.id_seleksi
+                      ORDER BY a.id DESC") or die(mysqli_error($connection));
 
                     while ($pengumuman = mysqli_fetch_assoc($query_pengumuman)):
                       $link_file_prestasi = !$pengumuman['file_prestasi'] 
@@ -115,8 +125,9 @@ else :
                         <td><?= $no++ ?></td>
                         <td><?= $pengumuman['tahun'] ?></td>
                         <td><?= $pengumuman['nama_siswa'] ?></td>
-                        <td><?= $pengumuman['nilai_prestasi'] ?></td>
-                        <td><?= $pengumuman['nilai_keahlian'] ?></td>
+                        <td><?= $pengumuman['nama_posisi'] ?></td>
+                        <td><?= $pengumuman['nama_perusahaan'] ?></td>
+                        <td><?= $pengumuman['nama_jenis'] ?></td>
                         <td>
                           <?php if (!$link_file_prestasi): ?>
 
@@ -166,11 +177,12 @@ else :
                         </td>
                         <td>
                           <button class="btn btn-datatable btn-icon btn-transparent-dark me-2 toggle_tooltip toggle_modal_tambah_or_ubah" title="Input Keterangan"
-                            data-id_penilaian="<?= $pengumuman['id_penilaian'] ?>"
+                            data-id_seleksi="<?= $pengumuman['id_seleksi'] ?>"
                             data-tahun="<?= $pengumuman['tahun'] ?>"
                             data-nama_siswa="<?= $pengumuman['nama_siswa'] ?>"
-                            data-nilai_prestasi="<?= $pengumuman['nilai_prestasi'] ?>"
-                            data-nilai_keahlian="<?= $pengumuman['nilai_keahlian'] ?>">
+                            data-nama_posisi="<?= $pengumuman['nama_posisi'] ?>"
+                            data-nama_perusahaan="<?= $pengumuman['nama_perusahaan'] ?>"
+                            data-keterangan_seleksi="<?= $pengumuman['keterangan_seleksi'] ?>">
                             <i class="fa fa-pen-to-square"></i>
                           </button>
 
@@ -220,26 +232,26 @@ else :
           <form>
             <div class="modal-body">
               
-              <input type="hidden" id="xid_penilaian" name="xid_penilaian">
+              <input type="hidden" id="xid_seleksi" name="xid_seleksi">
               
               <div class="mb-3">
                 <label class="small mb-1" for="xtahun">Tahun Penilaian</label>
-                <input type="number" name="xtahun" min="0" max="100" class="form-control mb-1" id="xtahun" placeholder="Enter tahun penilaian" disabled />
+                <input type="number" name="xtahun" min="0" max="100" class="form-control mb-1" id="xtahun" placeholder="Enter tahun seleksi" disabled />
               </div>
               
               <div class="mb-3">
                 <label class="small mb-1" for="xnama_siswa">Siswa</label>
-                <input type="text" name="xnama_siswa" min="0" max="100" class="form-control mb-1" id="xnama_siswa" placeholder="Enter siswa" disabled />
+                <input type="text" name="xnama_siswa" class="form-control mb-1" id="xnama_siswa" placeholder="Enter siswa" disabled />
               </div>
-            
+              
               <div class="mb-3">
-                <label class="small mb-1" for="xnilai_prestasi">Nilai Prestasi</label>
-                <input type="number" name="xnilai_prestasi" min="0" max="100" class="form-control mb-1" id="xnilai_prestasi" placeholder="Enter nilai prestasi" disabled />
+                <label class="small mb-1" for="xnama_posisi">Posisi Penempatan</label>
+                <input type="text" name="xnama_posisi" class="form-control mb-1" id="xnama_posisi" placeholder="Enter posisi penempatan" disabled />
               </div>
-            
+              
               <div class="mb-3">
-                <label class="small mb-1" for="xnilai_keahlian">Nilai Keahlian</label>
-                <input type="number" name="xnilai_keahlian" min="0" max="100" class="form-control mb-1" id="xnilai_keahlian" placeholder="Enter nilai keahlian" disabled />
+                <label class="small mb-1" for="xnama_perusahaan">Perusahaan</label>
+                <input type="text" name="xnama_perusahaan" class="form-control mb-1" id="xnama_perusahaan" placeholder="Enter nama perusahaan" disabled />
               </div>
               
               <div class="mb-3">
@@ -276,11 +288,12 @@ else :
           $('#ModalInputPengumuman .modal-title').html(`<i data-feather="edit" class="me-2 mt-1"></i>Ubah Pengumuman`);
           $('#ModalInputPengumuman form').attr({action: 'pengumuman_tambah_or_ubah.php', method: 'post'});
 
-          $('#ModalInputPengumuman #xid_penilaian').val(data.id_penilaian);
+          $('#ModalInputPengumuman #xid_seleksi').val(data.id_seleksi);
           $('#ModalInputPengumuman #xtahun').val(data.tahun);
           $('#ModalInputPengumuman #xnama_siswa').val(data.nama_siswa);
-          $('#ModalInputPengumuman #xnilai_prestasi').val(data.nilai_prestasi);
-          $('#ModalInputPengumuman #xnilai_keahlian').val(data.nilai_keahlian);
+          $('#ModalInputPengumuman #xnama_posisi').val(data.nama_posisi);
+          $('#ModalInputPengumuman #xnama_perusahaan').val(data.nama_perusahaan);
+          $('#ModalInputPengumuman #xketerangan_seleksi').val(data.keterangan_seleksi).trigger('change');
 
           // Re-init all feather icons
           feather.replace();

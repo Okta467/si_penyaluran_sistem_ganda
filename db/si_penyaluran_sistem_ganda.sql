@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 27, 2024 at 03:38 AM
+-- Generation Time: Jun 27, 2024 at 12:08 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
 
@@ -330,11 +330,19 @@ INSERT INTO `tbl_pengguna` (`id`, `username`, `password`, `hak_akses`, `created_
 
 CREATE TABLE `tbl_pengumuman_seleksi` (
   `id` int(10) UNSIGNED NOT NULL,
-  `id_penilaian_seleksi` int(10) UNSIGNED DEFAULT NULL,
+  `id_seleksi` int(10) UNSIGNED DEFAULT NULL,
   `keterangan_seleksi` enum('lolos','tidak_lolos') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_pengumuman_seleksi`
+--
+
+INSERT INTO `tbl_pengumuman_seleksi` (`id`, `id_seleksi`, `keterangan_seleksi`, `created_at`, `updated_at`) VALUES
+(1, 2, 'lolos', '2024-06-27 09:47:47', NULL),
+(3, 4, 'tidak_lolos', '2024-06-27 09:49:41', NULL);
 
 -- --------------------------------------------------------
 
@@ -428,7 +436,8 @@ CREATE TABLE `tbl_seleksi` (
 
 INSERT INTO `tbl_seleksi` (`id`, `id_tahun_seleksi`, `id_siswa`, `id_posisi_penempatan`, `created_at`, `updated_at`) VALUES
 (1, 4, 1, 1, '2024-06-27 01:05:00', NULL),
-(2, 4, 3, 7, '2024-06-27 01:12:53', NULL);
+(2, 4, 3, 7, '2024-06-27 01:12:53', NULL),
+(4, 4, 5, 7, '2024-06-27 09:49:35', NULL);
 
 -- --------------------------------------------------------
 
@@ -559,7 +568,7 @@ ALTER TABLE `tbl_pengguna`
 --
 ALTER TABLE `tbl_pengumuman_seleksi`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_tahun_akademik` (`id_penilaian_seleksi`);
+  ADD KEY `id_tahun_akademik` (`id_seleksi`);
 
 --
 -- Indexes for table `tbl_perusahaan`
@@ -668,7 +677,7 @@ ALTER TABLE `tbl_pengguna`
 -- AUTO_INCREMENT for table `tbl_pengumuman_seleksi`
 --
 ALTER TABLE `tbl_pengumuman_seleksi`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_perusahaan`
@@ -692,7 +701,7 @@ ALTER TABLE `tbl_prestasi_siswa`
 -- AUTO_INCREMENT for table `tbl_seleksi`
 --
 ALTER TABLE `tbl_seleksi`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbl_siswa`
@@ -742,7 +751,7 @@ ALTER TABLE `tbl_kelas`
 -- Constraints for table `tbl_pengumuman_seleksi`
 --
 ALTER TABLE `tbl_pengumuman_seleksi`
-  ADD CONSTRAINT `tbl_pengumuman_seleksi_ibfk_1` FOREIGN KEY (`id_penilaian_seleksi`) REFERENCES `tbl_seleksi` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tbl_pengumuman_seleksi_ibfk_1` FOREIGN KEY (`id_seleksi`) REFERENCES `tbl_seleksi` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tbl_perusahaan`
