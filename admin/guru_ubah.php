@@ -81,8 +81,8 @@
         // Pengguna statement preparation and execution
         $stmt_pengguna  = mysqli_stmt_init($connection);
         $query_pengguna = !$password
-            ? "UPDATE tbl_pengguna SET username=? WHERE id=?"
-            : "UPDATE tbl_pengguna SET username=?, password=? WHERE id=?";
+            ? "UPDATE tbl_pengguna SET username=?, hak_akses=? WHERE id=?"
+            : "UPDATE tbl_pengguna SET username=?, hak_akses=?, password=? WHERE id=?";
         
         if (!mysqli_stmt_prepare($stmt_pengguna, $query_pengguna)) {
             $_SESSION['msg'] = 'Statement Pengguna preparation failed: ' . mysqli_stmt_error($stmt_pengguna);
@@ -91,8 +91,8 @@
         }
         
         !$password
-            ? mysqli_stmt_bind_param($stmt_pengguna, 'si', $username, $id_pengguna)
-            : mysqli_stmt_bind_param($stmt_pengguna, 'ssi', $username, $password, $id_pengguna);
+            ? mysqli_stmt_bind_param($stmt_pengguna, 'ssi', $username, $hak_akses, $id_pengguna)
+            : mysqli_stmt_bind_param($stmt_pengguna, 'sssi', $username, $hak_akses, $password, $id_pengguna);
         
         if (!mysqli_stmt_execute($stmt_pengguna)) {
             $_SESSION['msg'] = 'Statement Pengguna preparation failed: ' . mysqli_stmt_error($stmt_pengguna);
