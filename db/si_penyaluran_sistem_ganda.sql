@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 27, 2024 at 02:33 AM
+-- Generation Time: Jun 27, 2024 at 03:38 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
 
@@ -339,32 +339,6 @@ CREATE TABLE `tbl_pengumuman_seleksi` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_penilaian_seleksi`
---
-
-CREATE TABLE `tbl_penilaian_seleksi` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `id_tahun_penilaian` int(10) UNSIGNED DEFAULT NULL,
-  `id_siswa` int(10) UNSIGNED NOT NULL,
-  `id_prestasi_siswa` int(10) UNSIGNED DEFAULT NULL,
-  `id_keahlian_siswa` int(10) UNSIGNED DEFAULT NULL,
-  `nilai_keahlian` decimal(4,2) NOT NULL,
-  `nilai_prestasi` decimal(4,2) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tbl_penilaian_seleksi`
---
-
-INSERT INTO `tbl_penilaian_seleksi` (`id`, `id_tahun_penilaian`, `id_siswa`, `id_prestasi_siswa`, `id_keahlian_siswa`, `nilai_keahlian`, `nilai_prestasi`, `created_at`, `updated_at`) VALUES
-(1, 4, 1, 1, NULL, '89.00', '89.00', '2024-06-24 15:36:46', '2024-06-24 17:15:52'),
-(4, 4, 3, NULL, NULL, '78.00', '78.00', '2024-06-24 18:02:47', NULL);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `tbl_perusahaan`
 --
 
@@ -436,6 +410,29 @@ INSERT INTO `tbl_prestasi_siswa` (`id`, `id_siswa`, `nama_prestasi`, `file_prest
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_seleksi`
+--
+
+CREATE TABLE `tbl_seleksi` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `id_tahun_seleksi` int(10) UNSIGNED DEFAULT NULL,
+  `id_siswa` int(10) UNSIGNED NOT NULL,
+  `id_posisi_penempatan` int(10) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_seleksi`
+--
+
+INSERT INTO `tbl_seleksi` (`id`, `id_tahun_seleksi`, `id_siswa`, `id_posisi_penempatan`, `created_at`, `updated_at`) VALUES
+(1, 4, 1, 1, '2024-06-27 01:05:00', NULL),
+(2, 4, 3, 7, '2024-06-27 01:12:53', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_siswa`
 --
 
@@ -469,10 +466,10 @@ INSERT INTO `tbl_siswa` (`id`, `id_pengguna`, `id_kelas`, `nisn`, `nama_siswa`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_tahun_penilaian`
+-- Table structure for table `tbl_tahun_seleksi`
 --
 
-CREATE TABLE `tbl_tahun_penilaian` (
+CREATE TABLE `tbl_tahun_seleksi` (
   `id` int(10) UNSIGNED NOT NULL,
   `tahun` year(4) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -480,10 +477,10 @@ CREATE TABLE `tbl_tahun_penilaian` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `tbl_tahun_penilaian`
+-- Dumping data for table `tbl_tahun_seleksi`
 --
 
-INSERT INTO `tbl_tahun_penilaian` (`id`, `tahun`, `created_at`, `updated_at`) VALUES
+INSERT INTO `tbl_tahun_seleksi` (`id`, `tahun`, `created_at`, `updated_at`) VALUES
 (1, 2021, '2024-05-28 05:11:49', '2024-06-13 15:21:31'),
 (2, 2022, '2024-05-28 04:52:33', '2024-06-13 15:21:28'),
 (3, 2023, '2024-05-28 04:54:00', '2024-06-13 15:21:23'),
@@ -565,16 +562,6 @@ ALTER TABLE `tbl_pengumuman_seleksi`
   ADD KEY `id_tahun_akademik` (`id_penilaian_seleksi`);
 
 --
--- Indexes for table `tbl_penilaian_seleksi`
---
-ALTER TABLE `tbl_penilaian_seleksi`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_siswa` (`id_siswa`),
-  ADD KEY `id_prestasi_siswa` (`id_prestasi_siswa`),
-  ADD KEY `id_kompetensi_siswa` (`id_keahlian_siswa`),
-  ADD KEY `id_tahun_akademik` (`id_tahun_penilaian`);
-
---
 -- Indexes for table `tbl_perusahaan`
 --
 ALTER TABLE `tbl_perusahaan`
@@ -597,6 +584,15 @@ ALTER TABLE `tbl_prestasi_siswa`
   ADD KEY `id_siswa` (`id_siswa`);
 
 --
+-- Indexes for table `tbl_seleksi`
+--
+ALTER TABLE `tbl_seleksi`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_siswa` (`id_siswa`),
+  ADD KEY `id_tahun_akademik` (`id_tahun_seleksi`),
+  ADD KEY `id_posisi_penempatan` (`id_posisi_penempatan`);
+
+--
 -- Indexes for table `tbl_siswa`
 --
 ALTER TABLE `tbl_siswa`
@@ -605,9 +601,9 @@ ALTER TABLE `tbl_siswa`
   ADD KEY `id_pengguna` (`id_pengguna`);
 
 --
--- Indexes for table `tbl_tahun_penilaian`
+-- Indexes for table `tbl_tahun_seleksi`
 --
-ALTER TABLE `tbl_tahun_penilaian`
+ALTER TABLE `tbl_tahun_seleksi`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -675,12 +671,6 @@ ALTER TABLE `tbl_pengumuman_seleksi`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `tbl_penilaian_seleksi`
---
-ALTER TABLE `tbl_penilaian_seleksi`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
 -- AUTO_INCREMENT for table `tbl_perusahaan`
 --
 ALTER TABLE `tbl_perusahaan`
@@ -699,16 +689,22 @@ ALTER TABLE `tbl_prestasi_siswa`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `tbl_seleksi`
+--
+ALTER TABLE `tbl_seleksi`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `tbl_siswa`
 --
 ALTER TABLE `tbl_siswa`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `tbl_tahun_penilaian`
+-- AUTO_INCREMENT for table `tbl_tahun_seleksi`
 --
-ALTER TABLE `tbl_tahun_penilaian`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `tbl_tahun_seleksi`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
@@ -746,16 +742,7 @@ ALTER TABLE `tbl_kelas`
 -- Constraints for table `tbl_pengumuman_seleksi`
 --
 ALTER TABLE `tbl_pengumuman_seleksi`
-  ADD CONSTRAINT `tbl_pengumuman_seleksi_ibfk_1` FOREIGN KEY (`id_penilaian_seleksi`) REFERENCES `tbl_penilaian_seleksi` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `tbl_penilaian_seleksi`
---
-ALTER TABLE `tbl_penilaian_seleksi`
-  ADD CONSTRAINT `tbl_penilaian_seleksi_ibfk_1` FOREIGN KEY (`id_siswa`) REFERENCES `tbl_siswa` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tbl_penilaian_seleksi_ibfk_2` FOREIGN KEY (`id_prestasi_siswa`) REFERENCES `tbl_prestasi_siswa` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `tbl_penilaian_seleksi_ibfk_3` FOREIGN KEY (`id_keahlian_siswa`) REFERENCES `tbl_keahlian_siswa` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `tbl_penilaian_seleksi_ibfk_4` FOREIGN KEY (`id_tahun_penilaian`) REFERENCES `tbl_tahun_penilaian` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `tbl_pengumuman_seleksi_ibfk_1` FOREIGN KEY (`id_penilaian_seleksi`) REFERENCES `tbl_seleksi` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tbl_perusahaan`
@@ -775,6 +762,14 @@ ALTER TABLE `tbl_posisi_penempatan`
 --
 ALTER TABLE `tbl_prestasi_siswa`
   ADD CONSTRAINT `tbl_prestasi_siswa_ibfk_1` FOREIGN KEY (`id_siswa`) REFERENCES `tbl_siswa` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `tbl_seleksi`
+--
+ALTER TABLE `tbl_seleksi`
+  ADD CONSTRAINT `tbl_seleksi_ibfk_1` FOREIGN KEY (`id_siswa`) REFERENCES `tbl_siswa` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tbl_seleksi_ibfk_4` FOREIGN KEY (`id_tahun_seleksi`) REFERENCES `tbl_tahun_seleksi` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `tbl_seleksi_ibfk_5` FOREIGN KEY (`id_posisi_penempatan`) REFERENCES `tbl_posisi_penempatan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tbl_siswa`
