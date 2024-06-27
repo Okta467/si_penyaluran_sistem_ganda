@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 26, 2024 at 03:52 PM
+-- Generation Time: Jun 27, 2024 at 02:33 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
 
@@ -315,11 +315,12 @@ CREATE TABLE `tbl_pengguna` (
 --
 
 INSERT INTO `tbl_pengguna` (`id`, `username`, `password`, `hak_akses`, `created_at`, `last_login`) VALUES
-(9, 'admin', '$2y$10$VSwsaud3aHkzE3VzMfuGCO9YizH7A7wVnx7Xfi9kUDiJdhDY53Msy', 'admin', '2024-06-10 14:42:24', '2024-06-26 05:39:41'),
+(9, 'admin', '$2y$10$VSwsaud3aHkzE3VzMfuGCO9YizH7A7wVnx7Xfi9kUDiJdhDY53Msy', 'admin', '2024-06-10 14:42:24', '2024-06-26 19:19:56'),
 (23, 'okta467', '$2y$10$0lhFQXTfT8wjZ9YmmNVWruV36NLEeFoLKEbrwWaMfjHv3gtOb2H4C', 'siswa', '2024-06-24 18:13:00', '2024-06-24 15:29:20'),
 (24, 'bimasatria', '$2y$10$PJ0tlPZHqurX0xzM2NA.XO3AXBpKr6oPbWI6m2u2V8haaDMfpk2J.', 'siswa', '2024-06-24 18:17:17', NULL),
 (25, '196506121990022003', '$2y$10$r6i9ouw57cTTevcboVpfxuaaeGE.LqvH0ivtFunGnpjhus3jtxu1q', 'kepala_sekolah', '2024-06-24 18:29:06', '2024-06-24 15:53:16'),
-(33, 'bankbri', '$2y$10$TN/rveG929csN1Cbx3xhAeR0cNtWVTNlgafk9Z37E0ZgkCUqNmx66', 'perusahaan', '2024-06-26 13:30:09', NULL);
+(33, 'bankbri', '$2y$10$TN/rveG929csN1Cbx3xhAeR0cNtWVTNlgafk9Z37E0ZgkCUqNmx66', 'perusahaan', '2024-06-26 13:30:09', NULL),
+(34, 'iconplus', '$2y$10$nQRKxiCx.1L39VwkwEF3buNhiqt7TuDHat6P5IiWucR0VPSZeCBKa', 'perusahaan', '2024-06-27 00:30:37', NULL);
 
 -- --------------------------------------------------------
 
@@ -382,7 +383,8 @@ CREATE TABLE `tbl_perusahaan` (
 --
 
 INSERT INTO `tbl_perusahaan` (`id`, `id_pengguna`, `id_jenis_perusahaan`, `nama_perusahaan`, `alamat_perusahaan`, `created_at`, `updated_at`) VALUES
-(3, 33, 1, 'PT Bank Rakyat Indonesia Tbk.', 'Gedung BRI JL Jenderal Sudirman Kav. 44-46, Jakarta, 10210, Indonesia', '2024-06-26 11:42:03', '2024-06-26 13:30:09');
+(3, 33, 1, 'PT Bank Rakyat Indonesia Tbk.', 'Gedung BRI JL Jenderal Sudirman Kav. 44-46, Jakarta, 10210, Indonesia', '2024-06-26 11:42:03', '2024-06-26 13:30:09'),
+(5, 34, 3, 'PT Icon Plus', 'SBU SUMBAGSEL, Jl. Demang Lebar Daun No.375, Demang Lebar Daun, Kec. Ilir Bar. I, Kota Palembang, Sumatera Selatan, 30131', '2024-06-27 00:30:37', NULL);
 
 -- --------------------------------------------------------
 
@@ -397,6 +399,17 @@ CREATE TABLE `tbl_posisi_penempatan` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_posisi_penempatan`
+--
+
+INSERT INTO `tbl_posisi_penempatan` (`id`, `id_perusahaan`, `nama_posisi`, `created_at`, `updated_at`) VALUES
+(1, 3, 'Junior Fullstack Developer', '2024-06-27 00:25:09', '2024-06-27 00:25:22'),
+(3, 3, 'Frontend Developer', '2024-06-27 00:28:45', '2024-06-27 00:29:15'),
+(4, 3, 'Backend Developer', '2024-06-27 00:28:57', NULL),
+(5, 3, 'Junior Network Engineer', '2024-06-27 00:29:09', NULL),
+(7, 5, 'Junior Network Engineer', '2024-06-27 00:33:36', NULL);
 
 -- --------------------------------------------------------
 
@@ -653,7 +666,7 @@ ALTER TABLE `tbl_pendidikan`
 -- AUTO_INCREMENT for table `tbl_pengguna`
 --
 ALTER TABLE `tbl_pengguna`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `tbl_pengumuman_seleksi`
@@ -671,13 +684,13 @@ ALTER TABLE `tbl_penilaian_seleksi`
 -- AUTO_INCREMENT for table `tbl_perusahaan`
 --
 ALTER TABLE `tbl_perusahaan`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_posisi_penempatan`
 --
 ALTER TABLE `tbl_posisi_penempatan`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tbl_prestasi_siswa`
