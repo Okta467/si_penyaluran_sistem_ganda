@@ -21,7 +21,7 @@ function isAlreadyLoggedIn($hak_akses): bool {
 			break;
 		
 		default:
-			header("location:index.php");
+			header("location:logout.php");
 			break;
 	}
 
