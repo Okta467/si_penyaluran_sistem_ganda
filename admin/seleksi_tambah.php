@@ -15,8 +15,21 @@
     $id_posisi_penempatan = $_POST['xid_posisi_penempatan'];
 
     $stmt_seleksi = mysqli_stmt_init($connection);
+    $query_seleksi = 
+        "SELECT a.id AS id_seleksi, b.id AS id_pengumuman, b.keterangan_seleksi 
+        FROM tbl_seleksi AS a
+        LEFT JOIN tbl_pengumuman_seleksi AS b
+            ON a.id = b.id_seleksi
+        WHERE
+            a.id_siswa=? 
+            AND a.id_tahun_seleksi=?
+            AND 
+            (
+                b.keterangan_seleksi = 'lolos' 
+                OR b.keterangan_seleksi IS NULL
+            )";
 
-    mysqli_stmt_prepare($stmt_seleksi, "SELECT id FROM tbl_seleksi WHERE id_siswa=? AND id_tahun_seleksi=?");
+    mysqli_stmt_prepare($stmt_seleksi, $query_seleksi);
     mysqli_stmt_bind_param($stmt_seleksi, 'ii', $id_siswa, $id_tahun_seleksi);
     mysqli_stmt_execute($stmt_seleksi);
 
@@ -24,7 +37,7 @@
     $seleksi = mysqli_fetch_assoc($result);
 
     if ($seleksi) {
-        $_SESSION['msg'] = 'Penilaian untuk siswa dan tahun seleksi tersebut sudah ada!';
+        $_SESSION['msg'] = 'Penilaian untuk siswa dan tahun seleksi tersebut sudah ada dan bukan yg tidak lolos!';
         echo "<meta http-equiv='refresh' content='0;seleksi.php?go=seleksi'>";
         return;
     }

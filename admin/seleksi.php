@@ -221,7 +221,7 @@ else :
                 <select name="xid_siswa" class="form-control mb-1 select2" id="xid_siswa" required>
                   <option value="">-- Pilih --</option>
                 </select>
-                <small class="text-muted">Siswa yang ditampilkan hanya yang belum dinilai pada tahun yang dipilih.</small>
+                <small class="text-muted">Siswa yang ditampilkan hanya yang sebelumnya ditolak atau belum dinilai pada tahun yang dipilih.</small>
               </div>
               
               <div class="mb-3">

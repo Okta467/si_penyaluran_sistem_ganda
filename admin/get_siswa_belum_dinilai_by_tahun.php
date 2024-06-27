@@ -20,7 +20,15 @@ $query =
     FROM tbl_siswa AS a
     LEFT JOIN tbl_seleksi AS b
         ON a.id = b.id_siswa
-    WHERE b.id_tahun_seleksi=?
+    LEFT JOIN tbl_pengumuman_seleksi AS c
+        ON b.id = c.id_seleksi
+    WHERE
+        b.id_tahun_seleksi=?
+        AND 
+        (
+            c.keterangan_seleksi = 'lolos' 
+            OR c.keterangan_seleksi IS NULL
+        )
     ORDER BY nama_siswa ASC";
 
 mysqli_stmt_prepare($stmt_sudah_diseleksi, $query);
