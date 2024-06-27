@@ -97,8 +97,8 @@ else :
                         a.id AS id_seleksi,
                         b.id AS id_tahun_seleksi, b.tahun,
                         c.id AS id_siswa, c.nisn, c.nama_siswa, c.jk, c.alamat, c.tmp_lahir, c.tgl_lahir, c.no_telp, c.email,
-                        d.id AS id_prestasi_siswa, d.nama_prestasi, d.file_prestasi,
-                        e.id AS id_keahlian_siswa, e.nama_keahlian, e.file_keahlian,
+                        IFNULL(d.jml_file_prestasi, 0) AS jml_file_prestasi,
+                        IFNULL(e.jml_file_keahlian, 0) AS jml_file_keahlian,
                         f.id AS id_posisi_penempatan, f.nama_posisi,
                         g.id AS id_perusahaan, g.nama_perusahaan,
                         h.id AS id_jenis_perusahaan, h.nama_jenis
@@ -107,9 +107,19 @@ else :
                         ON b.id = a.id_tahun_seleksi
                       INNER JOIN tbl_siswa AS c
                         ON c.id = a.id_siswa
-                      LEFT JOIN tbl_prestasi_siswa AS d
+                      LEFT JOIN
+                      (
+                        SELECT id_siswa, COUNT(id) jml_file_prestasi 
+                        FROM tbl_prestasi_siswa 
+                        GROUP BY id_siswa
+                      ) AS d
                         ON c.id = d.id_siswa
-                      LEFT JOIN tbl_keahlian_siswa AS e
+                      LEFT JOIN
+                      (
+                        SELECT id_siswa, COUNT(id) jml_file_keahlian
+                        FROM tbl_keahlian_siswa 
+                        GROUP BY id_siswa
+                      ) AS e
                         ON c.id = e.id_siswa
                       INNER JOIN tbl_posisi_penempatan AS f
                         ON f.id = a.id_posisi_penempatan
@@ -120,13 +130,6 @@ else :
                       ORDER BY a.id DESC");
 
                     while ($seleksi = mysqli_fetch_assoc($query_seleksi)):
-                      $link_file_prestasi = !$seleksi['file_prestasi'] 
-                        ? null 
-                        : base_url_return('assets/uploads/file_prestasi_siswa/') . $seleksi['file_prestasi'];
-
-                      $link_file_keahlian = !$seleksi['file_keahlian'] 
-                        ? null 
-                        : base_url_return('assets/uploads/file_keahlian_siswa/') . $seleksi['file_keahlian'];
                     ?>
 
                       <tr>
@@ -137,34 +140,32 @@ else :
                         <td><?= $seleksi['nama_perusahaan'] ?></td>
                         <td><?= $seleksi['nama_jenis'] ?></td>
                         <td>
-                          <?php if (!$link_file_prestasi): ?>
+                          <?php if (!$seleksi['jml_file_prestasi']): ?>
 
                             <small class="text-muted">Tidak ada</small>
 
                           <?php else: ?>
-
-                            <a class="btn btn-xs rounded-pill bg-purple-soft text-purple" href="<?= $link_file_prestasi ?>" target="_blank">
-                              <i data-feather="eye" class="me-1"></i>Preview
-                            </a>
-                            <a class="btn btn-xs rounded-pill bg-blue-soft text-blue" href="<?= $link_file_prestasi ?>" download>
-                              <i data-feather="download-cloud" class="me-1"></i>Download
-                            </a>
+                          
+                            <button type="button" class="btn btn-xs rounded-pill btn-outline-primary toggle_daftar_prestasi_siswa" data-id_siswa="<?= $seleksi['id_siswa'] ?>">
+                              <i data-feather="list" class="me-1"></i>
+                              Daftar
+                              <span class="btn btn-sm rounded-pill btn-outline-primary py-0 px-2 ms-1"><?= $seleksi['jml_file_prestasi'] ?></button>
+                            </button>
                           
                           <?php endif ?>
                         </td>
                         <td>
-                          <?php if (!$link_file_keahlian): ?>
+                          <?php if (!$seleksi['jml_file_keahlian']): ?>
 
                             <small class="text-muted">Tidak ada</small>
 
                           <?php else: ?>
                           
-                            <a class="btn btn-xs rounded-pill bg-purple-soft text-purple" href="<?= $link_file_keahlian ?>" target="_blank">
-                              <i data-feather="eye" class="me-1"></i>Preview
-                            </a>
-                            <a class="btn btn-xs rounded-pill bg-blue-soft text-blue" href="<?= $link_file_keahlian ?>" download>
-                              <i data-feather="download-cloud" class="me-1"></i>Download
-                            </a>
+                            <button type="button" class="btn btn-xs rounded-pill btn-outline-primary toggle_daftar_keahlian_siswa" data-id_siswa="<?= $seleksi['id_siswa'] ?>">
+                              <i data-feather="list" class="me-1"></i>
+                              Daftar
+                              <span class="btn btn-sm rounded-pill btn-outline-primary py-0 px-2 ms-1"><?= $seleksi['jml_file_keahlian'] ?></button>
+                            </button>
                           
                           <?php endif ?>
                         </td>
@@ -199,6 +200,41 @@ else :
 
       </div>
     </div>
+    
+    <!--============================= MODAL DAFTAR FILE SISWA =============================-->
+    <div class="modal fade" id="ModalDaftarFileSiswa" tabindex="-1" role="dialog" aria-labelledby="ModalDaftarFileSiswaTitle" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="ModalDaftarFileSiswaTitle"><i data-feather="book" class="me-2 mt-1"></i>Daftar Jurusan</h5>
+            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form>
+            <div class="modal-body">
+              
+              <table class="table table-striped" id="table_daftar_file_siswa">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Siswa</th>
+                    <th>Nama</th>
+                    <th>File</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-light border" type="button" data-bs-dismiss="modal">Batal</button>
+              <button class="btn btn-primary" type="submit">Simpan</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!--/.modal-daftar-file-siswa -->
     
     <!--============================= MODAL INPUT JURUSAN =============================-->
     <div class="modal fade" id="ModalInputSeleksi" tabindex="-1" role="dialog" aria-labelledby="ModalInputSeleksiTitle" aria-hidden="true">
@@ -284,6 +320,19 @@ else :
     <!-- PAGE SCRIPT -->
     <script>
       $(document).ready(function() {
+        
+        let tableDaftarFileSiswa = document.getElementById("table_daftar_file_siswa");
+  
+        if (tableDaftarFileSiswa) {
+          var datatableDaftarFileSiswa = new simpleDatatables.DataTable(tableDaftarFileSiswa, {
+            fixedHeader: true,
+            pageLength: 5,
+            lengthMenu: [
+              [3, 5, 10, 25, 50, 100],
+              [3, 5, 10, 25, 50, 100],
+            ]
+          });
+        }
 
         $('.toggle_modal_tambah').on('click', function() {
           $('#ModalInputSeleksi .modal-title').html(`<i data-feather="plus-circle" class="me-2 mt-1"></i>Tambah Seleksi`);
@@ -316,6 +365,126 @@ else :
           feather.replace();
           
           $('#ModalInputSeleksi').modal('show');
+        });
+
+        
+        $('.toggle_daftar_prestasi_siswa').on('click', function() {
+          const id_siswa = $(this).data('id_siswa');
+          
+          $('#ModalDaftarFileSiswa .modal-title').html(`<i data-feather="star" class="me-2 mt-1"></i>Daftar Prestasi Siswa`);
+        
+          $.ajax({
+            url: 'get_prestasi_siswa_by_id_siswa.php',
+            method: 'POST',
+            dataType: 'JSON',
+            data: {
+              'id_siswa': id_siswa
+            },
+            success: function(data) {
+              // add datatables row
+              let i = 1;
+              let rowsData = [];
+              
+              for (key in data) {
+                let filePrestasi = data[key]['file_prestasi'];
+        
+                if (!filePrestasi) {
+                  filePrestasiHtml = `<small class="text-muted">Tidak ada</small>`;
+                } else {
+                  filePrestasiPath = "<?= base_url_return('assets/uploads/file_prestasi_siswa/') ?>" + filePrestasi;
+                  
+                  // Preview button
+                  filePrestasiHtml = 
+                    `<a class="btn btn-xs rounded-pill bg-purple-soft text-purple" href="${filePrestasi}" target="_blank">
+                      <i data-feather="eye" class="me-1"></i>Preview
+                    </a>`;
+                  
+                  // Download button
+                  filePrestasiHtml +=
+                    `<a class="btn btn-xs rounded-pill bg-blue-soft text-blue" href="${filePrestasi}" download>
+                      <i data-feather="download-cloud" class="me-1"></i>Download
+                    </a>`;
+                }
+                
+                rowsData.push([i++, data[key]['nama_siswa'], data[key]['nama_prestasi'], filePrestasiHtml]);
+              }
+        
+              datatableDaftarFileSiswa.destroy();
+              datatableDaftarFileSiswa.init();
+              datatableDaftarFileSiswa.insert({
+                data: rowsData
+              });
+        
+              // Re-init all feather icons
+              feather.replace();
+              
+              $('#ModalDaftarFileSiswa').modal('show');
+            },
+            error: function(request, status, error) {
+              console.log("ajax call went wrong:" + request.responseText);
+              console.log("ajax call went wrong:" + error);
+            }
+          })
+        });
+        
+        
+        $('.toggle_daftar_keahlian_siswa').on('click', function() {
+          const id_siswa = $(this).data('id_siswa');
+          
+          $('#ModalDaftarFileSiswa .modal-title').html(`<i data-feather="star" class="me-2 mt-1"></i>Daftar Keahlian Siswa`);
+        
+          $.ajax({
+            url: 'get_keahlian_siswa_by_id_siswa.php',
+            method: 'POST',
+            dataType: 'JSON',
+            data: {
+              'id_siswa': id_siswa
+            },
+            success: function(data) {
+              // add datatables row
+              let i = 1;
+              let rowsData = [];
+              
+              for (key in data) {
+                let fileKeahlian = data[key]['file_keahlian'];
+        
+                if (!fileKeahlian) {
+                  fileKeahlianHtml = `<small class="text-muted">Tidak ada</small>`;
+                } else {
+                  fileKeahlianPath = "<?= base_url_return('assets/uploads/file_keahlian_siswa/') ?>" + fileKeahlian;
+                  
+                  // Preview button
+                  fileKeahlianHtml = 
+                    `<a class="btn btn-xs rounded-pill bg-purple-soft text-purple" href="${fileKeahlianPath}" target="_blank">
+                      <i data-feather="eye" class="me-1"></i>Preview
+                    </a>`;
+                  
+                  // Download button
+                  fileKeahlianHtml +=
+                    `<a class="btn btn-xs rounded-pill bg-blue-soft text-blue" href="${fileKeahlianPath}" download>
+                      <i data-feather="download-cloud" class="me-1"></i>Download
+                    </a>`;
+                }
+                
+                rowsData.push([i++, data[key]['nama_siswa'], data[key]['nama_keahlian'], fileKeahlianHtml]);
+              }
+        
+              datatableDaftarFileSiswa.destroy();
+              datatableDaftarFileSiswa.init();
+              datatableDaftarFileSiswa.insert({
+                data: rowsData
+              });
+        
+              // Re-init all feather icons
+              feather.replace();
+              
+              $('#ModalDaftarFileSiswa').modal('show');
+            },
+            error: function(request, status, error) {
+              console.log("ajax call went wrong:" + request.responseText);
+              console.log("ajax call went wrong:" + error);
+            }
+          })
         });
 
 
