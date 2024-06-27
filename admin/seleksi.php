@@ -54,6 +54,17 @@ else :
 
             </div>
             
+            <!-- Page Information Description -->
+            <div class="card card-header-actions mb-4 mt-5">
+              <div class="bg-gray-100 rounded p-3 border border-primary">
+                <h6 class="text-blue">
+                  <i data-feather="info" class="me-1"></i>
+                  Informasi
+                </h6>
+                <p class="small mb-0">Data yang ditampilkan merupakan <span class="text-danger">siswa</span> yang <span class="text-danger">sudah ditentukan</span> untuk perusahaan. Perusahaan dapat <span class="text-danger">me-review file prestasi dan keahlian</span> serta <span class="text-danger">mengubah posisi</span> penempatan sebelum memberikan <span class="text-danger">keterangan lolos/tidak</span> pada halaman <a href="pengumuman.php?go=pengumuman">pengumuman seleksi</a>.</p>
+              </div>
+            </div>
+            
             <!-- Main page content-->
             <div class="card card-header-actions mb-4 mt-5">
               <div class="card-header">
