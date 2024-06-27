@@ -80,6 +80,7 @@ else :
                       <th>#</th>
                       <th>Tahun</th>
                       <th>Siswa</th>
+                      <th>Kelas</th>
                       <th>Posisi Penempatan</th>
                       <th>Perusahaan</th>
                       <th>Jenis</th>
@@ -100,7 +101,8 @@ else :
                         IFNULL(e.jml_file_keahlian, 0) AS jml_file_keahlian,
                         f.id AS id_posisi_penempatan, f.nama_posisi,
                         g.id AS id_perusahaan, g.nama_perusahaan,
-                        h.id AS id_jenis_perusahaan, h.nama_jenis
+                        h.id AS id_jenis_perusahaan, h.nama_jenis,
+                        i.id AS id_kelas, i.nama_kelas
                       FROM tbl_seleksi AS a
                       INNER JOIN tbl_tahun_seleksi AS b
                         ON b.id = a.id_tahun_seleksi
@@ -126,16 +128,27 @@ else :
                         ON g.id = f.id_perusahaan
                       LEFT JOIN tbl_jenis_perusahaan AS h
                         ON h.id = g.id_jenis_perusahaan
+                      LEFT JOIN tbl_kelas AS i
+                        ON i.id = c.id_kelas
                       WHERE g.id = {$_SESSION['id_perusahaan']}
-                      ORDER BY a.id DESC") or die(mysqli_error($connection));
+                      ORDER BY a.id DESC");
 
                     while ($seleksi = mysqli_fetch_assoc($query_seleksi)):
                     ?>
 
                       <tr>
                         <td><?= $no++ ?></td>
-                        <td><?= $seleksi['tahun'] ?></td>
+                        <td>
+                          <div class="text-center">
+                            <?= $seleksi['tahun'] ?>
+                          </div>
+                        </td>
                         <td><?= $seleksi['nama_siswa'] ?></td>
+                        <td>
+                          <div class="text-center">
+                            <?= $seleksi['nama_kelas'] ?>
+                          </div>
+                        </td>
                         <td><?= $seleksi['nama_posisi'] ?></td>
                         <td><?= $seleksi['nama_perusahaan'] ?></td>
                         <td><?= $seleksi['nama_jenis'] ?></td>

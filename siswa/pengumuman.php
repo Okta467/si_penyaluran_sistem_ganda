@@ -69,6 +69,7 @@ else :
                       <th>#</th>
                       <th>Tahun</th>
                       <th>Siswa</th>
+                      <th>Kelas</th>
                       <th>Posisi Penempatan</th>
                       <th>Perusahaan</th>
                       <th>Jenis</th>
@@ -90,7 +91,8 @@ else :
                         f.id AS id_posisi_penempatan, f.nama_posisi,
                         g.id AS id_perusahaan, g.nama_perusahaan,
                         h.id AS id_jenis_perusahaan, h.nama_jenis,
-                        i.id AS id_pengumuman, i.keterangan_seleksi
+                        i.id AS id_pengumuman, i.keterangan_seleksi,
+                        j.id AS id_kelas, j.nama_kelas
                       FROM tbl_seleksi AS a
                       INNER JOIN tbl_tahun_seleksi AS b
                         ON b.id = a.id_tahun_seleksi
@@ -118,15 +120,26 @@ else :
                         ON h.id = g.id_jenis_perusahaan
                       LEFT JOIN tbl_pengumuman_seleksi AS i
                         ON a.id = i.id_seleksi
-                      WHERE c.id = {$_SESSION['id_siswa']}") or die(mysqli_error($connection));
+                      LEFT JOIN tbl_kelas AS j
+                        ON j.id = c.id_kelas
+                      WHERE c.id = {$_SESSION['id_siswa']}");
 
                     while ($pengumuman = mysqli_fetch_assoc($query_pengumuman)):
                     ?>
 
                       <tr>
                         <td><?= $no++ ?></td>
-                        <td><?= $pengumuman['tahun'] ?></td>
+                        <td>
+                          <div class="text-center">
+                            <?= $pengumuman['tahun'] ?>
+                          </div>
+                        </td>
                         <td><?= $pengumuman['nama_siswa'] ?></td>
+                        <td>
+                          <div class="text-center">
+                            <?= $pengumuman['nama_kelas'] ?>
+                          </div>
+                        </td>
                         <td><?= $pengumuman['nama_posisi'] ?></td>
                         <td><?= $pengumuman['nama_perusahaan'] ?></td>
                         <td><?= $pengumuman['nama_jenis'] ?></td>
