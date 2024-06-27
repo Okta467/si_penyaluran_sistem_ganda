@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 27, 2024 at 12:08 PM
+-- Generation Time: Jun 27, 2024 at 04:09 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
 
@@ -315,11 +315,11 @@ CREATE TABLE `tbl_pengguna` (
 --
 
 INSERT INTO `tbl_pengguna` (`id`, `username`, `password`, `hak_akses`, `created_at`, `last_login`) VALUES
-(9, 'admin', '$2y$10$VSwsaud3aHkzE3VzMfuGCO9YizH7A7wVnx7Xfi9kUDiJdhDY53Msy', 'admin', '2024-06-10 14:42:24', '2024-06-26 19:19:56'),
-(23, 'okta467', '$2y$10$0lhFQXTfT8wjZ9YmmNVWruV36NLEeFoLKEbrwWaMfjHv3gtOb2H4C', 'siswa', '2024-06-24 18:13:00', '2024-06-24 15:29:20'),
+(9, 'admin', '$2y$10$VSwsaud3aHkzE3VzMfuGCO9YizH7A7wVnx7Xfi9kUDiJdhDY53Msy', 'admin', '2024-06-10 14:42:24', '2024-06-27 08:34:29'),
+(23, 'okta467', '$2y$10$0lhFQXTfT8wjZ9YmmNVWruV36NLEeFoLKEbrwWaMfjHv3gtOb2H4C', 'siswa', '2024-06-24 18:13:00', '2024-06-27 07:12:20'),
 (24, 'bimasatria', '$2y$10$PJ0tlPZHqurX0xzM2NA.XO3AXBpKr6oPbWI6m2u2V8haaDMfpk2J.', 'siswa', '2024-06-24 18:17:17', NULL),
 (25, '196506121990022003', '$2y$10$r6i9ouw57cTTevcboVpfxuaaeGE.LqvH0ivtFunGnpjhus3jtxu1q', 'kepala_sekolah', '2024-06-24 18:29:06', '2024-06-24 15:53:16'),
-(33, 'bankbri', '$2y$10$TN/rveG929csN1Cbx3xhAeR0cNtWVTNlgafk9Z37E0ZgkCUqNmx66', 'perusahaan', '2024-06-26 13:30:09', NULL),
+(33, 'bankbri', '$2y$10$TN/rveG929csN1Cbx3xhAeR0cNtWVTNlgafk9Z37E0ZgkCUqNmx66', 'perusahaan', '2024-06-26 13:30:09', '2024-06-27 08:47:01'),
 (34, 'iconplus', '$2y$10$nQRKxiCx.1L39VwkwEF3buNhiqt7TuDHat6P5IiWucR0VPSZeCBKa', 'perusahaan', '2024-06-27 00:30:37', NULL);
 
 -- --------------------------------------------------------
@@ -342,7 +342,8 @@ CREATE TABLE `tbl_pengumuman_seleksi` (
 
 INSERT INTO `tbl_pengumuman_seleksi` (`id`, `id_seleksi`, `keterangan_seleksi`, `created_at`, `updated_at`) VALUES
 (1, 2, 'lolos', '2024-06-27 09:47:47', NULL),
-(3, 4, 'tidak_lolos', '2024-06-27 09:49:41', NULL);
+(3, 4, 'tidak_lolos', '2024-06-27 09:49:41', NULL),
+(4, 1, 'lolos', '2024-06-27 13:34:51', NULL);
 
 -- --------------------------------------------------------
 
@@ -437,7 +438,8 @@ CREATE TABLE `tbl_seleksi` (
 INSERT INTO `tbl_seleksi` (`id`, `id_tahun_seleksi`, `id_siswa`, `id_posisi_penempatan`, `created_at`, `updated_at`) VALUES
 (1, 4, 1, 1, '2024-06-27 01:05:00', NULL),
 (2, 4, 3, 7, '2024-06-27 01:12:53', NULL),
-(4, 4, 5, 7, '2024-06-27 09:49:35', NULL);
+(4, 4, 5, 7, '2024-06-27 09:49:35', '2024-06-27 13:07:28'),
+(5, 4, 5, 5, '2024-06-27 13:09:02', NULL);
 
 -- --------------------------------------------------------
 
@@ -677,7 +679,7 @@ ALTER TABLE `tbl_pengguna`
 -- AUTO_INCREMENT for table `tbl_pengumuman_seleksi`
 --
 ALTER TABLE `tbl_pengumuman_seleksi`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbl_perusahaan`
@@ -701,7 +703,7 @@ ALTER TABLE `tbl_prestasi_siswa`
 -- AUTO_INCREMENT for table `tbl_seleksi`
 --
 ALTER TABLE `tbl_seleksi`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_siswa`
