@@ -111,6 +111,7 @@ else :
                         ON e.id = b.id_jabatan
                       LEFT JOIN tbl_jenis_perusahaan AS f
                         ON f.id = d.id_jenis_perusahaan
+                      WHERE hak_akses != 'guru'
                       ORDER BY a.id DESC");
   
                     while ($pengguna = mysqli_fetch_assoc($query_pengguna)) :
