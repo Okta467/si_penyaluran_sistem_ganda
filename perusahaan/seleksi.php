@@ -395,13 +395,13 @@ else :
                   
                   // Preview button
                   filePrestasiHtml = 
-                    `<a class="btn btn-xs rounded-pill bg-purple-soft text-purple" href="${filePrestasi}" target="_blank">
+                    `<a class="btn btn-xs rounded-pill bg-purple-soft text-purple" href="${filePrestasiPath}" target="_blank">
                       <i data-feather="eye" class="me-1"></i>Preview
                     </a>`;
                   
                   // Download button
                   filePrestasiHtml +=
-                    `<a class="btn btn-xs rounded-pill bg-blue-soft text-blue" href="${filePrestasi}" download>
+                    `<a class="btn btn-xs rounded-pill bg-blue-soft text-blue" href="${filePrestasiPath}" download>
                       <i data-feather="download-cloud" class="me-1"></i>Download
                     </a>`;
                 }
