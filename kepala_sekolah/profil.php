@@ -512,11 +512,9 @@ else :
               // Set the transformed data to the select element using select2 method
               initSelect2(jurusanSelect, {
                 width: '100%',
-                dropdownParent: ".modal-content .modal-body",
+                dropdownParent: "#ModalInputProfil .modal-content .modal-body",
                 data: transformedData
               });
-              
-              $('#ModalDaftarJurusan').modal('show');
             },
             error: function(request, status, error) {
               // console.log("ajax call went wrong:" + request.responseText);
