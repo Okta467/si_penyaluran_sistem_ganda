@@ -232,8 +232,7 @@ else :
 
             </div>
             <div class="modal-footer">
-              <button class="btn btn-light border" type="button" data-bs-dismiss="modal">Batal</button>
-              <button class="btn btn-primary" type="submit">Simpan</button>
+              <button class="btn btn-light border" type="button" data-bs-dismiss="modal">Tutup</button>
             </div>
           </form>
         </div>
